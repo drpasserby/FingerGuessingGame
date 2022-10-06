@@ -5,12 +5,67 @@
     <script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <title>在线猜拳</title>
+    <style>
+        #doPage button{
+            width: 200px;
+            height: 200px;
+            border: 0px solid #000;
+            background: #fff;
+        }
+    </style>
 </head>
 <body>
-    <h1>this is a website,hello world!</h1>
+    <div id="app">
+        <div id="showPage">
+            {{result}}
+        </div>
+        <div id="doPage">
+            <button>
+                <img src="./img/qt.png" alt="石头" @click="humanDo('qt')">
+            </button>
+            <button>
+                <img src="./img/jd.png" alt="剪刀" @click="humanDo('jd')">
+            </button>
+            <button>
+                <img src="./img/bu.png" alt="布" @click="humanDo('bu')">
+            </button>
+        </div>
+    </div>
 </body>
 
 <script>
-
+    var app =new Vue({
+		el:'#app',
+		data:{
+            humando:"",
+            robotdo:"",
+            result:""
+		},
+		methods:{
+            humanDo:function(humando){
+                this.robotDo();
+                console.log(humando);
+                this.humando=humando;
+                console.log(this.showResult());
+                this.result=this.showResult();
+            },
+            robotDo:function(){
+                var arr=["qt","jd","bu"];
+                var index=Math.floor(Math.random()*3);
+                this.robotdo= arr[index];
+            },
+            showResult:function(){
+                var humando=this.humando;
+                var robotdo=this.robotdo;
+                if(humando==robotdo){
+                    return "平局";
+                }else if(humando=="qt"&&robotdo=="jd"||humando=="jd"&&robotdo=="bu"||humando=="bu"&&robotdo=="qt"){
+                    return "你赢了";
+                }else{
+                    return "你输了";
+                }
+            }
+        },
+    });
 </script>
 </html>
